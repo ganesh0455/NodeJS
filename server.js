@@ -25,10 +25,11 @@ function requestListener(req, res) {
             const parsedBody = Buffer.concat(body).toString();
             // console.log("parsedBody = ", parsedBody); O/p: enteredMessage = Ganesh,  here the enteredMessage is given in input field's name
             const message = parsedBody.split('=')[1];
-            fs.writeFileSync('message.text', message);
-            res.statusCode = 302;
-            res.setHeader('Location', '/');
-            return res.end();
+            fs.writeFile('message.text', message, (error) => {
+                res.statusCode = 302;
+                res.setHeader('Location', '/');
+                return res.end();
+            });
         });
     }
 

@@ -16,7 +16,17 @@ function requestListener(req, res) {
     }
 
     if(url === '/message' && method === 'POST'){
-        fs.writeFileSync('message.text', "Dummy");
+        const body = [];
+        req.on('data', (chunk) => {
+            // console.log("chunk = ", chunk);
+            body.push(chunk);
+        })
+        req.on('end', () => {
+            const parsedBody = Buffer.concat(body).toString();
+            // console.log("parsedBody = ", parsedBody); O/p: enteredMessage = Ganesh,  here the enteredMessage is given in input field's name
+            const message = parsedBody.split('=')[1];
+            fs.writeFileSync('message.text', message);
+        });
         res.statusCode = 302;
         res.setHeader('Location', '/');
         return res.end();

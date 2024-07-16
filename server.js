@@ -1,10 +1,17 @@
 const http = require('http');
 
 function requestListener(req, res) {
-    console.log("req = ", req);
-    console.log("req.url = ", req.url);
-    console.log("req.method = ", req.method);
-    console.log("req.headers = ", req.headers);
+    const url = req.url;
+
+    if (url === '/') {
+        res.write('<html>');
+        res.write('<head>');
+        res.write('<title>My first Page</title>');
+        res.write('</head>')
+        res.write('<body><form action="message" method="POST" ><input type="text" name="enteredMessage" /><button type="submit">Submit</button></form></body>');
+        res.write('</html>');
+        return res.end();
+    }
 
     res.setHeader('Content-Type', 'text/html');
     res.write('<html>');

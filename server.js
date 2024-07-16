@@ -21,15 +21,15 @@ function requestListener(req, res) {
             // console.log("chunk = ", chunk);
             body.push(chunk);
         })
-        req.on('end', () => {
+        return req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
             // console.log("parsedBody = ", parsedBody); O/p: enteredMessage = Ganesh,  here the enteredMessage is given in input field's name
             const message = parsedBody.split('=')[1];
             fs.writeFileSync('message.text', message);
+            res.statusCode = 302;
+            res.setHeader('Location', '/');
+            return res.end();
         });
-        res.statusCode = 302;
-        res.setHeader('Location', '/');
-        return res.end();
     }
 
     res.setHeader('Content-Type', 'text/html');

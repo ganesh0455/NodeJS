@@ -5,6 +5,15 @@ function requestListener(req, res) {
     console.log("req.url = ", req.url);
     console.log("req.method = ", req.method);
     console.log("req.headers = ", req.headers);
+
+    res.setHeader('Content-Type', 'text/html');
+    res.write('<html>');
+    res.write('<head>');
+    res.write('<title>My first Page</title>');
+    res.write('</head>')
+    res.write('<body><h1>Hello NodeJS!</h1></body>');
+    res.write('</html>');
+    res.end();
     // process.exit();
 }
 
